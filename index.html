@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>O2 IT Solutions | Ultra‑Premium Agency</title>
+  <meta name="description" content="Premium websites, e-commerce stores, and business systems that grow your business. Trusted by Sri Lankan businesses." />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== CSS Variables ===== */
+    :root{
+      --bg:#050816;
+      --panel: rgba(0,0,0,.35);
+      --border: rgba(30,64,175,.35);
+      --blue:#2563eb;
+      --blue2:#3b82f6;
+      --muted:#94a3b8;
+    }
+
+    /* ===== Base Styles ===== */
+    html{ scroll-behavior:smooth; }
+    body{
+      font-family:'Inter',sans-serif;
+      background:var(--bg);
+      overflow-x:hidden;
+    }
+
+    /* ===== Accessibility ===== */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--blue);
+      color: white;
+      padding: 8px 16px;
+      z-index: 100;
+      transition: top 0.3s;
+    }
+    .skip-link:focus { top: 0; }
+
+    a:focus, button:focus {
+      outline: 2px solid var(--blue2);
+      outline-offset: 2px;
+    }
+    a:focus:not(:focus-visible), button:focus:not(:focus-visible) {
+      outline: none;
+    }
+
+    /* ===== Hero Background ===== */
+    .hero-bg{
+      background:
+        radial-gradient(circle at 20% 25%, rgba(37,99,235,.32), transparent 42%),
+        radial-gradient(circle at 80% 20%, rgba(59,130,246,.28), transparent 40%),
+        radial-gradient(circle at 55% 85%, rgba(30,64,175,.32), transparent 42%),
+        radial-gradient(circle at 10% 85%, rgba(2,132,199,.18), transparent 45%),
+        #050816;
+    }
+
+    /* ===== Grid Background ===== */
+    .grid-bg{
+      background-image:
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size:40px 40px;
+    }
+
+    /* ===== Noise Overlay ===== */
+    .noise-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* ===== Glow Effects ===== */
+    .glow{ box-shadow:0 0 40px rgba(37,99,235,.45); }
+    .soft-glow{ box-shadow:0 0 80px rgba(37,99,235,.18); }
+
+    /* ===== Reveal Animation ===== */
+    .reveal{
+      opacity:0;
+      transform:translateY(60px);
+      transition:all 1s cubic-bezier(.16,1,.3,1);
+      will-change: transform, opacity;
+    }
+    .reveal.active{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    /* ===== Card Hover ===== */
+    .card-hover{
+      transition: transform .45s ease, box-shadow .45s ease, border-color .45s ease, background .45s ease;
+    }
+    .card-hover:hover{
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 28px 70px rgba(37,99,235,.25);
+      border-color: rgba(59,130,246,.55);
+      background: rgba(0,0,0,.42);
+    }
+
+    /* ===== Button Shine ===== */
+    .btn-shine{
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-shine::after{
+      content:"";
+      position:absolute;
+      top:-120%;
+      left:-40%;
+      width:50%;
+      height:300%;
+      transform: rotate(25deg);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+      transition: left .9s ease;
+    }
+    .btn-shine:hover::after{ left:120%; }
+
+    /* ===== Tag Pills ===== */
+    .pill{
+      border: 1px solid rgba(59,130,246,.35);
+      background: rgba(2,6,23,.35);
+    }
+
+    /* ===== Divider ===== */
+    .divider{
+      height:1px;
+      background: linear-gradient(90deg, transparent, rgba(59,130,246,.5), transparent);
+    }
+
+    /* ===== Scroll to Top ===== */
+    .scroll-top {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+    }
+    .scroll-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* ===== Scroll Indicator ===== */
+    @keyframes scroll-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+    .scroll-indicator { animation: scroll-bounce 2s ease-in-out infinite; }
+
+    /* ===== Image Loading ===== */
+    .img-loading {
+      background: linear-gradient(90deg, rgba(37,99,235,.1) 0%, rgba(37,99,235,.2) 50%, rgba(37,99,235,.1) 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ===== Project Image Zoom ===== */
+    .project-img { transition: transform 0.6s cubic-bezier(.16,1,.3,1); }
+    .group:hover .project-img { transform: scale(1.08); }
+
+    /* ===== Nav Active Link ===== */
+    .nav-link.active { color: var(--blue2); position: relative; }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--blue2);
+      border-radius: 1px;
+    }
+
+    /* ===== Mobile Menu ===== */
+    #mobileMenu {
+      transition: all 0.3s ease;
+      max-height: 0;
+      overflow: hidden;
+    }
+    #mobileMenu.open { max-height: 500px; }
+
+    /* ===== FAQ Accordion ===== */
+    .faq-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .faq-content.open { max-height: 300px; }
+    .faq-icon { transition: transform 0.3s ease; }
+    .faq-icon.open { transform: rotate(180deg); }
+
+    /* ===== Navbar Shrink ===== */
+    .navbar-shrink { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+  </style>
+</head>
+
+<body class="text-white">
+
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <!-- Noise Overlay -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- Scroll to Top Button -->
+  <button id="scrollTop" class="scroll-top fixed bottom-6 right-6 w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-700 glow flex items-center justify-center z-50" aria-label="Scroll to top">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+    </svg>
+  </button>
+
+  <!-- ===== NAVBAR ===== -->
+  <header class="fixed w-full z-50">
+    <div class="bg-black/50 backdrop-blur-xl border-b border-blue-900/40 transition-all duration-300" id="navbar">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="#top" class="flex items-center gap-3" aria-label="O2 IT Solutions Home">
+          <div class="w-9 h-9 rounded-2xl bg-blue-600/90 glow flex items-center justify-center font-black">O2</div>
+          <div class="leading-tight">
+            <div class="font-extrabold tracking-wide text-blue-300">O2 IT Solutions</div>
+            <div class="text-xs text-slate-400 -mt-0.5">Premium Digital Agency</div>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-8 text-sm text-slate-200" role="navigation" aria-label="Main navigation">
+          <a href="#services" class="nav-link hover:text-blue-300 transition" data-section="services">Services</a>
+          <a href="#process" class="nav-link hover:text-blue-300 transition" data-section="process">Process</a>
+          <a href="#projects" class="nav-link hover:text-blue-300 transition" data-section="projects">Projects</a>
+          <a href="#feedback" class="nav-link hover:text-blue-300 transition" data-section="feedback">Feedback</a>
+          <a href="#contact" class="nav-link hover:text-blue-300 transition" data-section="contact">Contact</a>
+        </nav>
+
+        <!-- CTA & Mobile Menu Button -->
+        <div class="flex items-center gap-3">
+          <a href="https://wa.me/94721115952" target="_blank" rel="noopener noreferrer"
+             class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 transition-all duration-300 glow font-semibold btn-shine">
+            <span>WhatsApp</span>
+            <span class="text-white/80" aria-hidden="true">→</span>
+          </a>
+
+          <button id="menuBtn" class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-2xl border border-blue-900/40 bg-black/40 hover:bg-black/55 transition" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="md:hidden border-t border-blue-900/30 bg-black/55 backdrop-blur-xl" role="navigation" aria-label="Mobile navigation">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-3 text-slate-200">
+          <a href="#services" class="py-3 hover:text-blue-300 transition min-h-[44px] flex items-center">Services</a>
+          <a href="#process" class="py-3 hover:text-blue-300 transition min-h-[44px] flex items-center">Process</a>
+          <a href="#projects" class="py-3 hover:text-blue-300 transition min-h-[44px] flex items-center">Projects</a>
+          <a href="#feedback" class="py-3 hover:text-blue-300 transition min-h-[44px] flex items-center">Feedback</a>
+          <a href="#contact" class="py-3 hover:text-blue-300 transition min-h-[44px] flex items-center">Contact</a>
+          <a href="https://wa.me/94721115952" target="_blank" rel="noopener noreferrer"
+             class="mt-2 mb-2 inline-flex items-center justify-center px-5 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 transition-all glow font-semibold btn-shine min-h-[44px]">
+            WhatsApp Now →
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- ===== HERO SECTION ===== -->
+    <section id="top" class="hero-bg grid-bg min-h-screen pt-28 md:pt-32" aria-label="Hero section">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid lg:grid-cols-12 gap-10 items-center">
+          <!-- Hero Content -->
+          <div class="lg:col-span-7 reveal">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full pill text-xs text-slate-200">
+              <span class="w-2 h-2 rounded-full bg-blue-400 soft-glow" aria-hidden="true"></span>
+              <span>Trusted by businesses in Sri Lanka</span>
+            </div>
+
+            <h1 class="mt-6 text-5xl md:text-7xl font-black leading-[1.05] tracking-tight">
+              Ultra‑Premium <span class="text-blue-300">Websites</span> & Digital Systems that grow your business.
+            </h1>
+
+            <p class="mt-6 text-lg md:text-xl text-slate-300 max-w-2xl">
+              We design and build high‑performance websites, e‑commerce stores, and custom business systems — crafted to convert visitors into paying customers.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="mt-10 flex flex-col sm:flex-row gap-4">
+              <a href="#contact" class="inline-flex items-center justify-center px-8 py-4 rounded-full bg-blue-600 hover:bg-blue-700 transition-all duration-300 glow font-bold btn-shine min-h-[52px]">
+                Get a Free Consultation →
+              </a>
+              <a href="#projects" class="inline-flex items-center justify-center px-8 py-4 rounded-full border border-blue-900/50 bg-black/30 hover:bg-black/45 transition-all font-semibold min-h-[52px]">
+                View Our Work
+              </a>
+            </div>
+
+            <div class="mt-10 divider"></div>
+
+            <!-- Trust Badges -->
+            <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm text-slate-300">
+              <div class="rounded-2xl border border-blue-900/30 bg-black/25 p-4">
+                <div class="text-xs text-slate-400">Delivery</div>
+                <div class="font-bold text-white">Fast & On‑time</div>
+              </div>
+              <div class="rounded-2xl border border-blue-900/30 bg-black/25 p-4">
+                <div class="text-xs text-slate-400">Design</div>
+                <div class="font-bold text-white">Premium UI/UX</div>
+              </div>
+              <div class="rounded-2xl border border-blue-900/30 bg-black/25 p-4">
+                <div class="text-xs text-slate-400">Performance</div>
+                <div class="font-bold text-white">Optimized Speed</div>
+              </div>
+              <div class="rounded-2xl border border-blue-900/30 bg-black/25 p-4">
+                <div class="text-xs text-slate-400">Support</div>
+                <div class="font-bold text-white">Long‑term Care</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stats Card -->
+          <div class="lg:col-span-5 reveal">
+            <div class="relative rounded-[2.25rem] border border-blue-900/40 bg-black/35 backdrop-blur-xl p-6 overflow-hidden soft-glow">
+              <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-blue-600/25 blur-3xl" aria-hidden="true"></div>
+              <div class="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-sky-500/20 blur-3xl" aria-hidden="true"></div>
+
+              <div class="flex items-center justify-between">
+                <div class="text-sm text-slate-300">Agency Score</div>
+                <div class="px-3 py-1 rounded-full pill text-xs text-blue-200">Premium</div>
+              </div>
+
+              <div class="mt-6 grid grid-cols-2 gap-4">
+                <div class="rounded-2xl border border-blue-900/35 bg-black/30 p-5">
+                  <div class="text-xs text-slate-400">Client Satisfaction</div>
+                  <div class="mt-2 text-3xl font-extrabold text-white"><span class="counter" data-target="98">0</span>%</div>
+                  <div class="mt-2 text-xs text-slate-400">Based on feedback</div>
+                </div>
+                <div class="rounded-2xl border border-blue-900/35 bg-black/30 p-5">
+                  <div class="text-xs text-slate-400">Avg. Page Speed</div>
+                  <div class="mt-2 text-3xl font-extrabold text-white"><span class="counter" data-target="90">0</span>+</div>
+                  <div class="mt-2 text-xs text-slate-400">Optimized builds</div>
+                </div>
+                <div class="rounded-2xl border border-blue-900/35 bg-black/30 p-5">
+                  <div class="text-xs text-slate-400">Projects Delivered</div>
+                  <div class="mt-2 text-3xl font-extrabold text-white"><span class="counter" data-target="120">0</span>+</div>
+                  <div class="mt-2 text-xs text-slate-400">Web & systems</div>
+                </div>
+                <div class="rounded-2xl border border-blue-900/35 bg-black/30 p-5">
+                  <div class="text-xs text-slate-400">Support Response</div>
+                  <div class="mt-2 text-3xl font-extrabold text-white"><span class="counter" data-target="15">0</span> min</div>
+                  <div class="mt-2 text-xs text-slate-400">Typical hours</div>
+                </div>
+              </div>
+
+              <div class="mt-6 rounded-2xl border border-blue-900/35 bg-black/25 p-5">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div class="text-xs text-slate-400">Ready to start?</div>
+                    <div class="font-bold text-white">Get a free strategy call</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="mt-16 flex justify-center" aria-hidden="true">
+          <div class="scroll-indicator text-slate-400 flex flex-col items-center gap-2">
+            <span class="text-xs uppercase tracking-widest">Scroll</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== WHY CHOOSE US ===== -->
+    <section class="py-20 bg-[#070c1f] grid-bg" aria-label="Why Choose Us">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <!-- Feature 1 -->
+          <div class="reveal text-center p-6">
+            <div class="w-16 h-16 mx-auto rounded-2xl bg-blue-600/20 border border-blue-900/35 flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <h3 class="font-bold text-lg text-white mb-2">Lightning Fast</h3>
+            <p class="text-sm text-slate-400">Websites optimized for speed with 90+ page speed scores.</p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="reveal text-center p-6">
+            <div class="w-16 h-16 mx-auto rounded-2xl bg-blue-600/20 border border-blue-900/35 flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <h3 class="font-bold text-lg text-white mb-2">Secure & Reliable</h3>
+            <p class="text-sm text-slate-400">Enterprise-grade security with SSL and regular backups.</p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="reveal text-center p-6">
+            <div class="w-16 h-16 mx-auto rounded-2xl bg-blue-600/20 border border-blue-900/35 flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+              </svg>
+            </div>
+            <h3 class="font-bold text-lg text-white mb-2">Mobile Responsive</h3>
+            <p class="text-sm text-slate-400">Perfect experience on all devices from mobile to desktop.</p>
+          </div>
+
+          <!-- Feature 4 -->
+          <div class="reveal text-center p-6">
+            <div class="w-16 h-16 mx-auto rounded-2xl bg-blue-600/20 border border-blue-900/35 flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            </div>
+            <h3 class="font-bold text-lg text-white mb-2">24/7 Support</h3>
+            <p class="text-sm text-slate-400">Dedicated support team ready to help anytime you need.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SERVICES ===== -->
+    <section id="services" class="py-28 bg-[#070c1f] grid-bg" aria-label="Services section">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-2xl mx-auto text-center reveal">
+          <h2 class="text-4xl md:text-5xl font-black text-blue-300">Services built for growth</h2>
+          <p class="mt-4 text-slate-300">Premium design, clean development, and business‑focused strategy — everything you need to win online.</p>
+        </div>
+
+        <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          <!-- Service 1 -->
+          <div class="reveal rounded-3xl p-8 border border-blue-900/35 bg-black/35 backdrop-blur-xl card-hover">
+            <div class="w-12 h-12 rounded-2xl bg-blue-600/20 border border-blue-900/35 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 class="mt-6 font-bold text-xl text-blue-200">Website Development</h3>
+            <p class="mt-3 text-slate-300 text-sm">Modern, responsive websites with conversion‑focused layouts and fast loading speed.</p>
+            <div class="mt-6 flex flex-wrap gap-2 text-xs text-slate-200">
+              <span class="px-3 py-1 rounded-full pill">UI/UX</span>
+              <span class="px-3 py-1 rounded-full pill">SEO</span>
+              <span class="px-3 py-1 rounded-full pill">Performance</span>
+            </div>
+          </div>
+
+          <!-- Service 2 -->
+          <div class="reveal rounded-3xl p-8 border border-blue-900/35 bg-black/35 backdrop-blur-xl card-hover">
+            <div class="w-12 h-12 rounded-2xl bg-blue-600/20 border border-blue-900/35 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <h3 class="mt-6 font-bold text-xl text-blue-200">E‑Commerce Websites</h3>
+            <p class="mt-3 text-slate-300 text-sm">Secure online stores with smooth checkout and product pages designed to sell.</p>
+            <div class="mt-6 flex flex-wrap gap-2 text-xs text-slate-200">
+              <span class="px-3 py-1 rounded-full pill">Payments</span>
+              <span class="px-3 py-1 rounded-full pill">Catalog</span>
+              <span class="px-3 py-1 rounded-full pill">Analytics</span>
+            </div>
+          </div>
+
+          <!-- Service 3 -->
+          <div class="reveal rounded-3xl p-8 border border-blue-900/35 bg-black/35 backdrop-blur-xl card-hover">
+            <div class="w-12 h-12 rounded-2xl bg-blue-600/20 border border-blue-900/35 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+              </svg>
+            </div>
+            <h3 class="mt-6 font-bold text-xl text-blue-200">Logo & Branding</h3>
+            <p class="mt-3 text-slate-300 text-sm">Premium brand identity that builds trust and makes your business unforgettable.</p>
+            <div class="mt-6 flex flex-wrap gap-2 text-xs text-slate-200">
+              <span class="px-3 py-1 rounded-full pill">Logo</span>
+              <span class="px-3 py-1 rounded-full pill">Brand Kit</span>
+              <span class="px-3 py-1 rounded-full pill">Guidelines</span>
+            </div>
+          </div>
+
+          <!-- Service 4 -->
+          <div class="reveal rounded-3xl p-8 border border-blue-900/35 bg-black/35 backdrop-blur-xl card-hover">
+            <div class="w-12 h-12 rounded-2xl bg-blue-600/20 border border-blue-900/35 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+              </svg>
+            </div>
+            <h3 class="mt-6 font-bold text-xl text-blue-200">Business Systems</h3>
+            <p class="mt-3 text-slate-300 text-sm">Custom systems for booking, inventory, staff, and operations — built to save time.</p>
+            <div class="mt-6 flex flex-wrap gap-2 text-xs text-slate-200">
+              <span class="px-3 py-1 rounded-full pill">Automation</span>
+              <span class="px-3 py-1 rounded-full pill">Dashboards</span>
+              <span class="px-3 py-1 rounded-full pill">Reports</span>
+            </div>
+          </div>
+
+          <!-- Service 5 -->
+          <div class="reveal rounded-3xl p-8 border border-blue-900/35 bg-black/35 backdrop-blur-xl card-hover">
+            <div class="w-12 h-12 rounded-2xl bg-blue-600/20 border border-blue-900/35 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <h3 class="mt-6 font-bold text-xl text-blue-200">Website Maintenance</h3>
+            <p class="mt-3 text-slate-300 text-sm">Security updates, backups, fixes, and improvements — keep your site running perfectly.</p>
+            <div class="mt-6 flex flex-wrap gap-2 text-xs text-slate-200">
+              <span class="px-3 py-1 rounded-full pill">Security</span>
+              <span class="px-3 py-1 rounded-full pill">Backups</span>
+              <span class="px-3 py-1 rounded-full pill">Updates</span>
+            </div>
+          </div>
+
+          <!-- Service 6 -->
+          <div class="reveal rounded-3xl p-8 border border-blue-900/35 bg-black/35 backdrop-blur-xl card-hover">
+            <div class="w-12 h-12 rounded-2xl bg-blue-600/20 border border-blue-900/35 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+            </div>
+            <h3 class="mt-6 font-bold text-xl text-blue-200">SEO Optimization</h3>
+            <p class="mt-3 text-slate-300 text-sm">Improve your Google ranking and bring consistent, high‑quality traffic to your business.</p>
+            <div class="mt-6 flex flex-wrap gap-2 text-xs text-slate-200">
+              <span class="px-3 py-1 rounded-full pill">On‑page</span>
+              <span class="px-3 py-1 rounded-full pill">Speed</span>
+              <span class="px-3 py-1 rounded-full pill">Local SEO</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROCESS ===== -->
+    <section id="process" class="py-28 bg-[#050816] grid-bg" aria-label="Process section">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-2xl mx-auto text-center reveal">
+          <h2 class="text-4xl md:text-5xl font-black text-blue-300">A simple process. Premium results.</h2>
+          <p class="mt-4 text-slate-300">Clear steps, fast delivery, and high quality — so you always know what's happening.</p>
+        </div>
+
+        <div class="mt-16 grid lg:grid-cols-4 gap-8">
+          <div class="reveal rounded-3xl p-7 border border-blue-900/35 bg-black/35 backdrop-blur-xl card-hover">
+            <div class="text-xs text-slate-400">Step 01</div>
+            <div class="mt-2 text-xl font-extrabold text-white">Discovery</div>
+            <p class="mt-3 text-sm text-slate-300">We learn your goals, customers, and what success looks like.</p>
+          </div>
+          <div class="reveal rounded-3xl p-7 border border-blue-900/35 bg-black/35 backdrop-blur-xl card-hover">
+            <div class="text-xs text-slate-400">Step 02</div>
+            <div class="mt-2 text-xl font-extrabold text-white">Design</div>
+            <p class="mt-3 text-sm text-slate-300">We craft a premium UI/UX that builds trust and converts.</p>
+          </div>
+          <div class="reveal rounded-3xl p-7 border border-blue-900/35 bg-black/35 backdrop-blur-xl card-hover">
+            <div class="text-xs text-slate-400">Step 03</div>
+            <div class="mt-2 text-xl font-extrabold text-white">Development</div>
+            <p class="mt-3 text-sm text-slate-300">Fast, clean code with SEO and performance built‑in.</p>
+          </div>
+          <div class="reveal rounded-3xl p-7 border border-blue-900/35 bg-black/35 backdrop-blur-xl card-hover">
+            <div class="text-xs text-slate-400">Step 04</div>
+            <div class="mt-2 text-xl font-extrabold text-white">Launch & Support</div>
+            <p class="mt-3 text-sm text-slate-300">We go live, monitor, and support you long‑term.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects" class="py-28 bg-[#070c1f] grid-bg" aria-label="Projects section">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 reveal">
+          <div>
+            <h2 class="text-4xl md:text-5xl font-black text-blue-300">Featured Projects</h2>
+            <p class="mt-3 text-slate-300 max-w-2xl">Real websites built with premium design — hover to preview, click to visit.</p>
+          </div>
+          <a href="#contact" class="inline-flex items-center justify-center px-7 py-3 rounded-full bg-blue-600 hover:bg-blue-700 transition glow font-semibold btn-shine">
+            Start a Project →
+          </a>
+        </div>
+
+        <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          <!-- Project 1 -->
+          <a href="https://8jjgames.com" target="_blank" rel="noopener noreferrer" class="reveal group rounded-3xl overflow-hidden border border-blue-900/35 bg-black/30 card-hover relative">
+            <img src="https://image.thum.io/get/width/900/https://8jjgames.com" class="h-56 w-full object-cover opacity-90 group-hover:opacity-100 transition project-img img-loading" alt="8jjgames.com preview" loading="lazy">
+            <div class="p-6">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-extrabold text-lg text-blue-200">8jjgames.com</h3>
+                <span class="text-xs text-slate-400">Live</span>
+              </div>
+              <div class="mt-3 flex flex-wrap gap-2 text-xs">
+                <span class="px-3 py-1 rounded-full pill text-slate-200">Web</span>
+                <span class="px-3 py-1 rounded-full pill text-slate-200">UI</span>
+              </div>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end">
+              <div class="p-6 w-full flex items-center justify-between">
+                <span class="text-sm text-white font-semibold">View Project</span>
+                <span class="text-white/90">→</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Project 2 -->
+          <a href="https://8jj.cc" target="_blank" rel="noopener noreferrer" class="reveal group rounded-3xl overflow-hidden border border-blue-900/35 bg-black/30 card-hover relative">
+            <img src="https://image.thum.io/get/width/900/https://8jj.cc" class="h-56 w-full object-cover opacity-90 group-hover:opacity-100 transition project-img img-loading" alt="8jj.cc preview" loading="lazy">
+            <div class="p-6">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-extrabold text-lg text-blue-200">8jj.cc</h3>
+                <span class="text-xs text-slate-400">Live</span>
+              </div>
+              <div class="mt-3 flex flex-wrap gap-2 text-xs">
+                <span class="px-3 py-1 rounded-full pill text-slate-200">Landing</span>
+                <span class="px-3 py-1 rounded-full pill text-slate-200">Fast</span>
+              </div>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end">
+              <div class="p-6 w-full flex items-center justify-between">
+                <span class="text-sm text-white font-semibold">View Project</span>
+                <span class="text-white/90">→</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Project 3 -->
+          <a href="https://lokkaads.com" target="_blank" rel="noopener noreferrer" class="reveal group rounded-3xl overflow-hidden border border-blue-900/35 bg-black/30 card-hover relative">
+            <img src="https://image.thum.io/get/width/900/https://lokkaads.com" class="h-56 w-full object-cover opacity-90 group-hover:opacity-100 transition project-img img-loading" alt="lokkaads.com preview" loading="lazy">
+            <div class="p-6">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-extrabold text-lg text-blue-200">lokkaads.com</h3>
+                <span class="text-xs text-slate-400">Live</span>
+              </div>
+              <div class="mt-3 flex flex-wrap gap-2 text-xs">
+                <span class="px-3 py-1 rounded-full pill text-slate-200">Business</span>
+                <span class="px-3 py-1 rounded-full pill text-slate-200">Brand</span>
+              </div>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end">
+              <div class="p-6 w-full flex items-center justify-between">
+                <span class="text-sm text-white font-semibold">View Project</span>
+                <span class="text-white/90">→</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Project 4 -->
+          <a href="https://inskgroup.com" target="_blank" rel="noopener noreferrer" class="reveal group rounded-3xl overflow-hidden border border-blue-900/35 bg-black/30 card-hover relative">
+            <img src="https://image.thum.io/get/width/900/https://inskgroup.com" class="h-56 w-full object-cover opacity-90 group-hover:opacity-100 transition project-img img-loading" alt="inskgroup.com preview" loading="lazy">
+            <div class="p-6">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-extrabold text-lg text-blue-200">inskgroup.com</h3>
+                <span class="text-xs text-slate-400">Live</span>
+              </div>
+              <div class="mt-3 flex flex-wrap gap-2 text-xs">
+                <span class="px-3 py-1 rounded-full pill text-slate-200">Corporate</span>
+                <span class="px-3 py-1 rounded-full pill text-slate-200">SEO</span>
+              </div>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end">
+              <div class="p-6 w-full flex items-center justify-between">
+                <span class="text-sm text-white font-semibold">View Project</span>
+                <span class="text-white/90">→</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Project 5 -->
+          <a href="https://tshirtrepublic.lk" target="_blank" rel="noopener noreferrer" class="reveal group rounded-3xl overflow-hidden border border-blue-900/35 bg-black/30 card-hover relative">
+            <img src="https://image.thum.io/get/width/900/https://tshirtrepublic.lk" class="h-56 w-full object-cover opacity-90 group-hover:opacity-100 transition project-img img-loading" alt="tshirtrepublic.lk preview" loading="lazy">
+            <div class="p-6">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-extrabold text-lg text-blue-200">tshirtrepublic.lk</h3>
+                <span class="text-xs text-slate-400">Live</span>
+              </div>
+              <div class="mt-3 flex flex-wrap gap-2 text-xs">
+                <span class="px-3 py-1 rounded-full pill text-slate-200">E‑commerce</span>
+                <span class="px-3 py-1 rounded-full pill text-slate-200">Shop</span>
+              </div>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end">
+              <div class="p-6 w-full flex items-center justify-between">
+                <span class="text-sm text-white font-semibold">View Project</span>
+                <span class="text-white/90">→</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Project 6 -->
+          <a href="https://innalodge.netlify.app/" target="_blank" rel="noopener noreferrer" class="reveal group rounded-3xl overflow-hidden border border-blue-900/35 bg-black/30 card-hover relative">
+            <img src="https://image.thum.io/get/width/900/https://innalodge.netlify.app/" class="h-56 w-full object-cover opacity-90 group-hover:opacity-100 transition project-img img-loading" alt="innalodge.netlify.app preview" loading="lazy">
+            <div class="p-6">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-extrabold text-lg text-blue-200">innalodge.netlify.app</h3>
+                <span class="text-xs text-slate-400">Live</span>
+              </div>
+              <div class="mt-3 flex flex-wrap gap-2 text-xs">
+                <span class="px-3 py-1 rounded-full pill text-slate-200">Hotel</span>
+                <span class="px-3 py-1 rounded-full pill text-slate-200">Landing</span>
+              </div>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end">
+              <div class="p-6 w-full flex items-center justify-between">
+                <span class="text-sm text-white font-semibold">View Project</span>
+                <span class="text-white/90">→</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FEEDBACK ===== -->
+    <section id="feedback" class="py-28 bg-[#050816] grid-bg" aria-label="Feedback section">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-2xl mx-auto text-center reveal">
+          <h2 class="text-4xl md:text-5xl font-black text-blue-300">Client Feedback</h2>
+          <p class="mt-4 text-slate-300">Only real, local trust — built through premium work and strong support.</p>
+        </div>
+
+        <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          <!-- Review 1 -->
+          <div class="reveal rounded-3xl p-8 border border-blue-900/35 bg-black/35 backdrop-blur-xl card-hover">
+            <div class="flex items-center justify-between">
+              <div class="flex text-yellow-400 text-lg leading-none">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              </div>
+              <span class="text-xs text-slate-400">Colombo</span>
+            </div>
+            <p class="mt-5 text-slate-200 text-sm leading-relaxed">
+              "Our website looks premium and loads very fast. Communication was clear and delivery was on time."
+            </p>
+            <div class="mt-6 flex items-center gap-4">
+              <div class="w-12 h-12 rounded-2xl bg-blue-600/90 glow flex items-center justify-center font-black">C</div>
+              <div>
+                <div class="font-bold text-blue-200">Chathura Fernando</div>
+                <div class="text-xs text-slate-400">Business Owner</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 2 -->
+          <div class="reveal rounded-3xl p-8 border border-blue-900/35 bg-black/35 backdrop-blur-xl card-hover">
+            <div class="flex items-center justify-between">
+              <div class="flex text-yellow-400 text-lg leading-none">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              </div>
+              <span class="text-xs text-slate-400">Gampaha</span>
+            </div>
+            <p class="mt-5 text-slate-200 text-sm leading-relaxed">
+              "Branding and design quality is excellent. Very smooth process and professional service."
+            </p>
+            <div class="mt-6 flex items-center gap-4">
+              <div class="w-12 h-12 rounded-2xl bg-blue-600/90 glow flex items-center justify-center font-black">N</div>
+              <div>
+                <div class="font-bold text-blue-200">Nadeesha Perera</div>
+                <div class="text-xs text-slate-400">Marketing</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 3 -->
+          <div class="reveal rounded-3xl p-8 border border-blue-900/35 bg-black/35 backdrop-blur-xl card-hover">
+            <div class="flex items-center justify-between">
+              <div class="flex text-yellow-400 text-lg leading-none">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              </div>
+              <span class="text-xs text-slate-400">Kandy</span>
+            </div>
+            <p class="mt-5 text-slate-200 text-sm leading-relaxed">
+              "They delivered our website perfectly. After launch, we started getting more customer inquiries."
+            </p>
+            <div class="mt-6 flex items-center gap-4">
+              <div class="w-12 h-12 rounded-2xl bg-blue-600/90 glow flex items-center justify-center font-black">R</div>
+              <div>
+                <div class="font-bold text-blue-200">Ravindu Jayasinghe</div>
+                <div class="text-xs text-slate-400">E‑commerce Client</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-14 text-center reveal">
+          <a href="#contact" class="inline-flex items-center justify-center px-8 py-4 rounded-full bg-blue-600 hover:bg-blue-700 transition glow font-bold btn-shine">
+            Get Your Premium Website →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA BAND ===== -->
+    <section class="py-20 bg-[#070c1f] grid-bg" aria-label="Call to Action">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="reveal rounded-[2.5rem] border border-blue-900/35 bg-black/35 backdrop-blur-xl p-10 md:p-14 overflow-hidden relative">
+          <div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-blue-600/25 blur-3xl"></div>
+          <div class="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-sky-500/20 blur-3xl"></div>
+
+          <div class="grid md:grid-cols-12 gap-10 items-center relative">
+            <div class="md:col-span-8">
+              <h3 class="text-3xl md:text-4xl font-black text-white">Ready to upgrade your business online?</h3>
+              <p class="mt-3 text-slate-300">Message us now and get a free consultation + strategy for your website or system.</p>
+            </div>
+            <div class="md:col-span-4 flex md:justify-end">
+              <a href="https://wa.me/94721115952" target="_blank" rel="noopener noreferrer" class="w-full md:w-auto inline-flex items-center justify-center px-8 py-4 rounded-full bg-blue-600 hover:bg-blue-700 transition glow font-bold btn-shine">
+                WhatsApp Now →
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact" class="py-28 bg-[#050816] text-center grid-bg" aria-label="Contact section">
+      <div class="max-w-3xl mx-auto px-6">
+        <h2 class="text-4xl md:text-5xl font-black mb-6 reveal text-blue-300">Let's Build Something Powerful</h2>
+        <p class="text-slate-300 mb-10 reveal">
+          Email: <span class="text-white font-semibold">itteam1127@gmail.com</span>
+        </p>
+
+        <div class="reveal flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="https://wa.me/94721115952" target="_blank" rel="noopener noreferrer" class="px-12 py-5 rounded-full bg-blue-600 hover:bg-blue-700 hover:scale-[1.03] transition duration-300 glow font-bold text-lg btn-shine">
+            Get Free Consultation
+          </a>
+          <a href="#projects" class="px-12 py-5 rounded-full border border-blue-900/50 bg-black/30 hover:bg-black/45 transition duration-300 font-bold text-lg">
+            View Work
+          </a>
+        </div>
+
+        <div class="mt-14 reveal text-xs text-slate-400">
+          Available in Sri Lanka • Remote projects accepted • Fast delivery
+        </div>
+
+        <!-- Social Links -->
+        <div class="mt-10 flex justify-center gap-6 reveal">
+          <a href="https://www.facebook.com/share/1BpYxFCqYt/" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-2xl bg-blue-600 hover:bg-blue-700 flex items-center justify-center glow transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2.3V12h2.3V9.8c0-2.3 1.4-3.6 3.5-3.6 1 0 2 .2 2 .2v2.2h-1.1c-1.1 0-1.5.7-1.5 1.4V12h2.6l-.4 2.9h-2.2v7A10 10 0 0 0 22 12z"/>
+            </svg>
+          </a>
+          <a href="https://www.instagram.com/o2_itsolutions?igsh=MTd6Z3luYWNtd2tvag==" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-500 via-red-500 to-yellow-500 hover:scale-105 flex items-center justify-center glow transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M7.75 2C4.57 2 2 4.57 2 7.75v8.5C2 19.43 4.57 22 7.75 22h8.5C19.43 22 22 19.43 22 16.25v-8.5C22 4.57 19.43 2 16.25 2h-8.5zm0 2h8.5C18.22 4 20 5.78 20 7.75v8.5C20 18.22 18.22 20 16.25 20h-8.5C5.78 20 4 18.22 4 16.25v-8.5C4 5.78 5.78 4 7.75 4zm8.75 1.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="py-8 text-center text-slate-500 border-t border-blue-900/30 text-sm bg-black/10">
+    © <script>document.write(new Date().getFullYear())</script> O2 IT Solutions. All Rights Reserved.
+  </footer>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    // Mobile Menu Toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    menuBtn?.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Close mobile menu on link click
+    mobileMenu?.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
+
+    // Reveal on Scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const revealOnScroll = () => {
+      reveals.forEach(el => {
+        if(el.getBoundingClientRect().top < window.innerHeight - 110){
+          el.classList.add('active');
+        }
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+
+    // Counter Animation
+    const counters = document.querySelectorAll('.counter');
+    let countersDone = false;
+
+    function animateCounters(){
+      if(countersDone) return;
+      const anyVisible = Array.from(counters).some(c => c.getBoundingClientRect().top < window.innerHeight - 120);
+      if(!anyVisible) return;
+      countersDone = true;
+
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target') || '0', 10);
+        let current = 0;
+        const duration = 1200;
+        const steps = 60;
+        const inc = Math.max(1, Math.round(target / steps));
+        const stepTime = Math.round(duration / (target / inc));
+
+        const tick = setInterval(() => {
+          current += inc;
+          if(current >= target){
+            counter.textContent = target;
+            clearInterval(tick);
+          } else {
+            counter.textContent = current;
+          }
+        }, Math.max(12, stepTime));
+      });
+    }
+    window.addEventListener('scroll', animateCounters);
+    window.addEventListener('load', animateCounters);
+
+    // Scroll to Top Button
+    const scrollTopBtn = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 300){
+        scrollTopBtn?.classList.add('visible');
+      } else {
+        scrollTopBtn?.classList.remove('visible');
+      }
+    });
+    scrollTopBtn?.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Active Nav Link on Scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    function updateActiveNav(){
+      const scrollPos = window.scrollY + 100;
+      sections.forEach(section => {
+        const top = section.offsetTop;
+        const height = section.offsetHeight;
+        const id = section.getAttribute('id');
+        
+        if(scrollPos >= top && scrollPos < top + height){
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if(link.getAttribute('data-section') === id){
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }
+    window.addEventListener('scroll', updateActiveNav);
+  </script>
+</body>
+</html>
+
